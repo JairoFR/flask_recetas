@@ -1,0 +1,33 @@
+{% extends "/base.html" %}
+{% block titulo %}{% endblock %}
+
+
+
+{% block contenido %}
+<nav class=" navbar navbar-dark bg-dark p-4 d-flex flex-row-reverse">
+    <form class="form-inline">
+        <a class=" text-decoration-none me-3 btn btn-lg btn-success p-1 " href="{{url_for('recetas')}}">back to
+            recipes</a>
+        <a class="btn btn-danger text-light text-decoration-none me-3" href="/logout">
+            <i class="fa fa-sign-out fa-x"></i></a>
+    </form>
+</nav>
+<div class="container mt-3">
+    <h1>Welcome, {{session['usuario']}}</h1>
+    <div class="alert alert-success" role="alert">
+        {%for recipe in recetas%}
+        <div class="d-flex justify-content-between">
+            <h4 class="alert-heading d-inline">{{recipe['nombre']}}</h4>
+            <h6 class="alert-heading d-inline float-right">Posted by: {{recipe.usuario}}</h6>
+        </div>
+            
+            <p>Description:                {{recipe['descripcion']}}</p>
+            <hr>
+            <p class="mb-0">Instruction: {{recipe['instruccion']}}</p>
+            <hr>
+            <p class="mb-0">Date Made: {{recipe['fecha_cocinado'].strftime("%d %b, %Y")}}</p>
+        {%endfor%}
+    </div>
+</div>
+
+{% endblock %}

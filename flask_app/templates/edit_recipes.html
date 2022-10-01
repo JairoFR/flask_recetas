@@ -1,0 +1,68 @@
+{% extends "/base.html" %}
+{% block titulo %}{% endblock %}
+
+
+
+{% block contenido %}
+<nav class=" navbar navbar-dark bg-dark p-4 d-flex flex-row-reverse">
+    <form class="form-inline">
+        <a class=" text-decoration-none me-3 btn btn-lg btn-success p-1 " href="{{url_for('recetas')}}">back to
+            recipes</a>
+        <a class="btn btn-danger text-light text-decoration-none me-3" href="/logout">
+            <i class="fa fa-sign-out fa-x"></i></a>
+    </form>
+</nav>
+<div class="container mt-3">
+    <h1>Edit Recipe!</h1>
+</div>
+<section class="container mt-5">
+    {%for recipe in recetas%}
+    <form method="post" action="{{url_for('edit_recipes', id=recipe.id)}}">
+        <div class="row">
+            <div class="col-6">
+
+                <div class="form-group row">
+                    <label for="nombre" class="col-sm-2 col-form-label">Name</label>
+                    <div class="col-sm-10">
+                        <input type="text" name="nombre" class="form-control" id="nombre" required value="{{recipe.nombre}}">
+                    </div>
+                </div>
+                <div class="form-group row mt-3">
+                    <label for="descripcion" class="col-sm-2 col-form-label">Description</label>
+                    <div class="col-sm-10">
+                        <textarea class="form-control" id="descripcion" name="descripcion" rows="3" required>{{recipe.descripcion}}</textarea>
+                    </div>
+                </div>
+                <div class="form-group row mt-3">
+                    <label for="descripcion" class="col-sm-2 col-form-label">Intructions</label>
+                    <div class="col-sm-10">
+                        <textarea class="form-control" id="instruccion" name="instruccion" rows="3" required>{{recipe.instruccion}}</textarea>
+                    </div>
+                </div>   
+            </div>
+            <div class="col-2 ms-5">
+                    <div class="form-group row">
+                        <label for="fecha_cocinado">Date Cooked/Made</label>
+                        <input type="date" class="form-control" name="fecha_cocinado" min="1900-04-01" required>
+                    </div>
+                    <h6 class="mt-5">Under 30 minutes?</h6>
+                    <div class="form-check form-check-inline mt-2">
+                        <input type="radio" id="customRadioInline1" name="tiempo" class="form-check-input" value="yes" required>
+                        <label class="form-check-label" for="customRadioInline1">YES</label>
+                    </div>  
+                    <div class="form-check form-check-inline">
+                        <input type="radio" id="customRadioInline2" name="tiempo" class="form-check-input" value="no" required>
+                        <label class="form-check-label" for="customRadioInline2">NO</label>
+                    </div>
+            </div>
+        </div>
+        <div class="row d-flex justify-content-center">
+            <div class="col-1">
+                <button type="submit" class="btn btn-primary mb-2 mt-5">Submit</button>
+            </div>
+        </div>
+        {%endfor%}
+    </form>
+</section>
+
+{% endblock %}

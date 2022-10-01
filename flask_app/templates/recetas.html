@@ -1,0 +1,55 @@
+{% extends "/base.html" %}
+{% block titulo %}{% endblock %}
+
+
+
+{% block contenido %} 
+<nav class=" navbar navbar-dark bg-dark p-4 d-flex flex-row-reverse">
+    <form class="form-inline">
+        
+        <a class=" text-decoration-none me-3 btn btn-lg btn-success p-1 " href="{{url_for('new_recipes')}}">Create <i class="fa fa-plus-circle" aria-hidden="true"></i></a>
+        <a class="btn btn-danger text-light text-decoration-none me-3" href="/logout">
+            <i class="fa fa-sign-out fa-x"></i></a>
+
+    </form>
+</nav>
+<div class="container mt-3">
+    <h1> Bienvenido {{session['usuario'] | title}} </h1>
+    <h6 class="mt-3">Recetas publicadas: </h6>
+    
+</div>
+
+<section class="container">
+    <div class="row">
+        <table class="table" id="myTable">
+
+            <thead class="thead-dark">
+                <tr>
+                  
+                    <th scope="col">Name</th>
+                    <th scope="col">Under</th>
+                    <th scope="col">Posted by</th>
+                    <th scope="col">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for receta in recetas%}
+                <tr>
+                    <th scope="row">{{receta.nombre | title}}</th>
+                    <th scope="row">{{receta.tiempo | title}}</th>
+                    <th scope="row">{{receta.usuario | title}}</th>
+                    <th scope="row">
+                        <a href="{{url_for('show_recipes', id=receta.id)}}" class="btn btn-info">
+                            <i class="fa fa-eye"  aria-hidden="true"></i></a>
+                        {%if session['usuario_id'] == receta.usuario_creador%}
+                            <a href="{{url_for('edit_recipes', id=receta.id)}}" class="btn btn-warning">
+                                <i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
+                            <a href="{{url_for('delete_recipes', id=receta.id)}}" class="btn btn-danger">
+                                <i class="fa fa-trash" aria-hidden="true"></i></a>
+                        {%endif%}
+                    </th>
+                </tr>
+                {%endfor%}
+    </div>
+</section>
+{% endblock %}
